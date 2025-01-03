@@ -94,7 +94,6 @@ jobs:
         name: typst.tmLanguage.json
         path: grammars
     - name: Commit to new branch
-      working-directory: main-branch
       run: |
         git config --global user.email "camiyoru@gmail.com"
         git config --global user.name "Myriad-Dreamin"
