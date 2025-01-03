@@ -97,8 +97,16 @@ jobs:
       run: |
         git config --global user.email "camiyoru@gmail.com"
         git config --global user.name "Myriad-Dreamin"
-        git checkout -b build-${{ env.TINYMIST_REF }}-${{ github.run_number }}
+        git checkout main
+        mkdir -p grammars
         mv typst.tmLanguage.json grammars/typst.tmLanguage.json
+        cat > build-ref.json << EOF
+        {
+          "tinymist-ref": "${{ env.TINYMIST_REF }}"
+          "github-ref": "${{ github.sha }}"
+        }
+        EOF
+        git add build-ref.json
         git add grammars/typst.tmLanguage.json
-        git commit -m "build: upload grammars/typst.tmLanguage.json"
-        git push origin build-${{ env.TINYMIST_REF }}-${{ github.run_number }}
+        git commit -m "build: update grammars/typst.tmLanguage.json"
+        git push -f
