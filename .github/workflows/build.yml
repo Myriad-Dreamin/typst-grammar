@@ -121,7 +121,11 @@ jobs:
           "github-ref": "${{ github.sha }}"
         }
         EOF
-        git add build-ref.json
+        cat > build-ref.md << EOF
+        [tinymist-ref](https://github.com/Myriad-Dreamin/tinymist/commit/${{ env.TINYMIST_REF }})
+        [github-ref](https://github.com/Myriad-Dreamin/typst-grammar/commit/${{ github.sha }})
+        EOF
+        git add build-ref.json build-ref.md
         git add grammars/typst.tmLanguage.json
         git commit -m "build: update grammars/typst.tmLanguage.json"
         git push origin build-${{ env.TINYMIST_REF }}-${{ github.run_number }}
