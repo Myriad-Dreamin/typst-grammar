@@ -4,10 +4,10 @@ name: Build Grammar
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "build" ]
   pull_request:
     types: [opened, synchronize]
-    branches: [ "main" ]
+    branches: [ "main", "build" ]
 
 jobs:
   build:
