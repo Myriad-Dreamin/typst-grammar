@@ -36,6 +36,11 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+        # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. 
+        # It will generate hash from the target file for primary key. It works only If cache is specified.  
+        # Supports wildcards or a list of file names for caching multiple dependencies.
+        # Default: ''
+        cache-dependency-path: 'tinymist/yarn.lock'
         cache: 'yarn'
     - run: cd tinymist/syntaxes/textmate && yarn install
     - run: cd tinymist/syntaxes/textmate && yarn compile
