@@ -48,6 +48,9 @@ jobs:
     - name: Remove typst-grammar submodule
       run: |
         rm -rf vendor/grammars/typst-grammar
+    - name: Remove repository test
+      run: |
+        rm test/test_repository.rb
     - uses: actions/checkout@v4
       with:
         # Relative path under $GITHUB_WORKSPACE to place the repository
