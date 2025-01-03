@@ -117,7 +117,7 @@ jobs:
         mv typst.tmLanguage.json grammars/typst.tmLanguage.json
         cat > build-ref.json << EOF
         {
-          "tinymist-ref": "${{ env.TINYMIST_REF }}"
+          "tinymist-ref": "${{ env.TINYMIST_REF }}",
           "github-ref": "${{ github.sha }}"
         }
         EOF
