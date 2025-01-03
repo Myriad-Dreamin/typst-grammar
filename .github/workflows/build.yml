@@ -11,16 +11,12 @@ on:
 
 env:
   TINYMIST_REF: 626efa0d78388c47f6948cce3db041a8da46b639
+  NODE_VERSION: 22.x
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
@@ -35,10 +31,10 @@ jobs:
         ref: ${{ env.TINYMIST_REF }}
         # Relative path under $GITHUB_WORKSPACE to place the repository
         path: 'tinymist'
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: ${{ env.NODE_VERSION }}
         # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. 
         # It will generate hash from the target file for primary key. It works only If cache is specified.  
         # Supports wildcards or a list of file names for caching multiple dependencies.
@@ -100,6 +96,10 @@ jobs:
       with:
         name: typst.tmLanguage.json
         path: .
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
     - name: pretty json using node `JSON`
       run: |
         node -e "console.log(JSON.stringify(JSON.parse(require('fs').readFileSync('typst.tmLanguage.json', 'utf-8')), null, 1))" > typst.tmLanguage.json
