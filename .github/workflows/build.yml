@@ -100,6 +100,9 @@ jobs:
       with:
         name: typst.tmLanguage.json
         path: .
+    - name: pretty json using node `JSON`
+      run: |
+        node -e "console.log(JSON.stringify(JSON.parse(require('fs').readFileSync('typst.tmLanguage.json', 'utf-8')), null, 1))" > typst.tmLanguage.json
     - name: Commit to new branch
       run: |
         mkdir -p grammars
