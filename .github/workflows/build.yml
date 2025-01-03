@@ -49,7 +49,7 @@ jobs:
     - run: |
         mv typst.tmLanguage.json typst.tinymist.tmLanguage.json
         mv typst-code.tmLanguage.json typst-code.tinymist.tmLanguage.json
-        cat >> feature.mts << EOF
+        cat > feature.mts << EOF
         export const SYNTAX_WITH_BOLD_ITALIC = true;
         export const SYNTAX_WITH_MATH = true;
         export const SYNTAX_WITH_LANGS = false;
