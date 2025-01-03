@@ -9,6 +9,9 @@ on:
     types: [opened, synchronize]
     branches: [ "main", "build" ]
 
+env:
+  TINYMIST_REF: 626efa0d78388c47f6948cce3db041a8da46b639
+
 jobs:
   build:
 
@@ -29,7 +32,7 @@ jobs:
         # The branch, tag or SHA to checkout. When checking out the repository that
         # triggered a workflow, this defaults to the reference or SHA for that event.
         # Otherwise, uses the default branch.
-        ref: '626efa0d78388c47f6948cce3db041a8da46b639'
+        ref: ${{ env.TINYMIST_REF }}
         # Relative path under $GITHUB_WORKSPACE to place the repository
         path: 'tinymist'
     - name: Use Node.js ${{ matrix.node-version }}
@@ -77,3 +80,26 @@ jobs:
         name: typst-code.tinymist.tmLanguage.json
         path: tinymist/syntaxes/textmate/typst-code.tinymist.tmLanguage.json
 
+  commit:
+    needs: build
+    if: github.ref == 'refs/heads/build'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: download built grammars
+      uses: actions/download-artifact@v4
+      with:
+        name: typst-base.tmLanguage.json
+        path: grammars
+    - name: Commit to new branch
+      working-directory: main-branch
+      run: |
+        git config --global user.email "camiyoru@gmail.com"
+        git config --global user.name "Myriad-Dreamin"
+        git checkout -b build-${{ env.TINYMIST_REF }}
+        mv tinymist/syntaxes/textmate/typst.tmLanguage.json grammars/typst.tmLanguage.json
+        git add grammars/typst.tmLanguage.json
+        git commit -m "build: upload grammars/typst.tmLanguage.json"
+        git push origin build-${{ env.TINYMIST_REF }}
