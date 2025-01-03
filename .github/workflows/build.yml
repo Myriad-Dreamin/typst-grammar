@@ -1,0 +1,41 @@
+# This workflow build grammars
+name: Build Grammar
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    types: [opened, synchronize]
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+      with:
+        # Repository name with owner. For example, actions/checkout
+        # Default: ${{ github.repository }}
+        repository: 'Myriad-Dreamin/tinymist'
+        # The branch, tag or SHA to checkout. When checking out the repository that
+        # triggered a workflow, this defaults to the reference or SHA for that event.
+        # Otherwise, uses the default branch.
+        ref: '626efa0d78388c47f6948cce3db041a8da46b639'
+        # Relative path under $GITHUB_WORKSPACE to place the repository
+        path: 'tinymist'
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+    - run: cd tinymist/syntaxes/textmate && yarn install
+    - run: cd tinymist/syntaxes/textmate && yarn compile
