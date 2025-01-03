@@ -88,6 +88,12 @@ jobs:
       contents: write
     steps:
     - uses: actions/checkout@v4
+    - name: Checkout to main
+      run: |
+        git config --global user.email "camiyoru@gmail.com"
+        git config --global user.name "Myriad-Dreamin"
+        git checkout -b build-${{ env.TINYMIST_REF }}-${{ github.run_number }}
+        git reset --hard origin/main
     - name: download built grammars
       uses: actions/download-artifact@v4
       with:
@@ -95,10 +101,6 @@ jobs:
         path: .
     - name: Commit to new branch
       run: |
-        git config --global user.email "camiyoru@gmail.com"
-        git config --global user.name "Myriad-Dreamin"
-        git fetch origin/main
-        git checkout main
         mkdir -p grammars
         mv typst.tmLanguage.json grammars/typst.tmLanguage.json
         cat > build-ref.json << EOF
@@ -110,4 +112,4 @@ jobs:
         git add build-ref.json
         git add grammars/typst.tmLanguage.json
         git commit -m "build: update grammars/typst.tmLanguage.json"
-        git push -f
+        git push origin build-${{ env.TINYMIST_REF }}-${{ github.run_number }}
