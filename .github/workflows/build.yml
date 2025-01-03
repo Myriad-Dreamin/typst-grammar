@@ -46,3 +46,34 @@ jobs:
       working-directory: tinymist
     - run: yarn compile
       working-directory: tinymist/syntaxes/textmate
+    - run: |
+        mv typst.tmLanguage.json typst.tinymist.tmLanguage.json
+        mv typst-code.tmLanguage.json typst-code.tinymist.tmLanguage.json
+        cat >> feature.mts << EOF
+        export const SYNTAX_WITH_BOLD_ITALIC = true;
+        export const SYNTAX_WITH_MATH = true;
+        export const SYNTAX_WITH_LANGS = false;
+        EOF
+        yarn compile
+      working-directory: tinymist/syntaxes/textmate
+    - name: Upload built typst.tmLanguage.json
+      uses: actions/upload-artifact@v4
+      with:
+        name: typst.tmLanguage.json
+        path: tinymist/syntaxes/textmate/typst.tmLanguage.json
+    - name: Upload built typst-code.tmLanguage.json
+      uses: actions/upload-artifact@v4
+      with:
+        name: typst.tmLanguage.json
+        path: tinymist/syntaxes/textmate/typst-code.tmLanguage.json
+    - name: Upload built typst.tinymist.tmLanguage.json
+      uses: actions/upload-artifact@v4
+      with:
+        name: typst.tinymist.tmLanguage.json
+        path: tinymist/syntaxes/textmate/typst.tinymist.tmLanguage.json
+    - name: Upload built typst-code.tinymist.tmLanguage.json
+      uses: actions/upload-artifact@v4
+      with:
+        name: typst.tinymist.tmLanguage.json
+        path: tinymist/syntaxes/textmate/typst-code.tinymist.tmLanguage.json
+
