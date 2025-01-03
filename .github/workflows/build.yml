@@ -42,5 +42,7 @@ jobs:
         # Default: ''
         cache-dependency-path: 'tinymist/yarn.lock'
         cache: 'yarn'
-    - run: cd tinymist/syntaxes/textmate && yarn install
-    - run: cd tinymist/syntaxes/textmate && yarn compile
+    - run: yarn install
+      working-directory: tinymist
+    - run: yarn compile
+      working-directory: tinymist/syntaxes/textmate
