@@ -102,7 +102,15 @@ jobs:
         node-version: ${{ env.NODE_VERSION }}
     - name: pretty json using node `JSON`
       run: |
-        node -e "console.log(JSON.stringify(JSON.parse(require('fs').readFileSync('typst.tmLanguage.json', 'utf-8')), null, 1))" > typst.tmLanguage.json
+        cat > pretty.cjs << EOF
+        const fs = require('fs');
+        const content = fs.readFileSync('typst.tmLanguage.json', 'utf-8');
+        console.log("content read", typeof content, content.length);
+        const json = JSON.parse(content);
+        const prettied = JSON.stringify(json, null, 1);
+        fs.writeFileSync('typst.tmLanguage.json', prettied);
+        EOF
+        node pretty.cjs        
     - name: Commit to new branch
       run: |
         mkdir -p grammars
