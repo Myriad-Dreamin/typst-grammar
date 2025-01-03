@@ -91,14 +91,14 @@ jobs:
     - name: download built grammars
       uses: actions/download-artifact@v4
       with:
-        name: typst.tmLanguage.json
+        name: new-typst.tmLanguage.json
         path: grammars
     - name: Commit to new branch
       run: |
         git config --global user.email "camiyoru@gmail.com"
         git config --global user.name "Myriad-Dreamin"
         git checkout -b build-${{ env.TINYMIST_REF }}-${{ github.run_number }}
-        mv tinymist/syntaxes/textmate/typst.tmLanguage.json grammars/typst.tmLanguage.json
+        mv new-typst.tmLanguage.json grammars/typst.tmLanguage.json
         git add grammars/typst.tmLanguage.json
         git commit -m "build: upload grammars/typst.tmLanguage.json"
         git push origin build-${{ env.TINYMIST_REF }}-${{ github.run_number }}
