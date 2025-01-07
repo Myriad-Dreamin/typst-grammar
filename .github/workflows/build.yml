@@ -113,7 +113,7 @@ jobs:
         fs.writeFileSync('typst.tmLanguage.json', prettied);
         EOF
         node pretty.cjs        
-    - name: Commit to new branch
+    - name: Create a new branch
       run: |
         mkdir -p grammars
         mv typst.tmLanguage.json grammars/typst.tmLanguage.json
