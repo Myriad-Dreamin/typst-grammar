@@ -10,7 +10,7 @@ on:
     branches: [ "main", "build" ]
 
 env:
-  TINYMIST_REF: d4d8345166b1ece203fe87b7dbf013ac61ab14c2
+  TINYMIST_REF: 691a28ef55756766c9f65f4097bd6c7ff5878238
   NODE_VERSION: 22.x
 
 jobs:
@@ -52,6 +52,8 @@ jobs:
         export const SYNTAX_WITH_BOLD_ITALIC = true;
         export const SYNTAX_WITH_MATH = true;
         export const SYNTAX_WITH_LANGS = false;
+        export const POLYFILL_P_XID = true;
+        export const FIXED_LENGTH_LOOK_BEHIND = true;
         EOF
         yarn compile
       working-directory: tinymist/syntaxes/textmate
