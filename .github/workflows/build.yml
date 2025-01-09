@@ -54,6 +54,7 @@ jobs:
         export const SYNTAX_WITH_LANGS = false;
         export const POLYFILL_P_XID = true;
         export const FIXED_LENGTH_LOOK_BEHIND = true;
+        export const ANNOTATE_META = true;
         EOF
         yarn compile
       working-directory: tinymist/syntaxes/textmate
