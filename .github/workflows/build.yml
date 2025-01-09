@@ -10,7 +10,7 @@ on:
     branches: [ "main", "build" ]
 
 env:
-  TINYMIST_REF: 691a28ef55756766c9f65f4097bd6c7ff5878238
+  TINYMIST_REF: v0.12.18
   NODE_VERSION: 22.x
 
 jobs:
